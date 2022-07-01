@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Study</string>
+    <string name="tv_a">abcdefghijklmnopqrstuvwxyz 为中华之崛起而读书</string>
+    <string name="btn_1">按钮</string>
+    <string name="et_1">请输入</string>
+    <string name="toolbar_1">Toolbar</string>
+</resources>
