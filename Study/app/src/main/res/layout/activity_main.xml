@@ -78,7 +78,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
 
-        android:src="@drawable/ic_people1"
+        android:src="@drawable/ic_homepage_qsg"
 
         android:maxWidth="100dp"
         android:maxHeight="100dp"

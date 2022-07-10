@@ -15,8 +15,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,11 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_1:
-                //获取输入框内容
-                String et = et1.getText().toString();
-                Log.d(TAG, "onClick: " + et);
-                sendNotification();
-                isPbShow();
+                //popupView
+                popupView(v);
                 break;
             default:
                 break;
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //进度条显示
-    private void isPbShow() {
+    public void isPbShow() {
         if (pb1.getVisibility() == View.GONE) {
             pb1.setVisibility(View.VISIBLE);
         }else {
@@ -161,12 +160,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
     }
     //发送通知
-    private void sendNotification() {
+    public void sendNotification() {
         manager.notify(1,notification);
     }
     //取消通知，id要与发送的id一致
     private void cancelNotification() {
         manager.cancel(1);
+    }
+
+    private void popupView(View v) {
+        //绑定布局文件
+        View popupView = getLayoutInflater().inflate(R.layout.popup_view, null);
+
+        Button btn1 = popupView.findViewById(R.id.btn_pop1);
+        Button btn2 = popupView.findViewById(R.id.btn_pop2);
+        Button btn3 = popupView.findViewById(R.id.btn_pop3);
+
+        //设置弹出框大小，点击空白取消
+        PopupWindow popupWindow = new PopupWindow(popupView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true);
+
+        popupWindow.showAsDropDown(v,v.getWidth()+300,-v.getHeight());
+
+        //按钮
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //通知栏
+                sendNotification();
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //进度条
+                isPbShow();
+            }
+        });
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //获取输入框内容
+                String et = et1.getText().toString();
+                Log.d(TAG, "onClick: " + et);
+                //关闭popupWindow
+                popupWindow.dismiss();
+            }
+        });
     }
 
 }
